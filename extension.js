@@ -2,26 +2,19 @@
   /* v1  */
 
 async function removeWindow(w){
-    if (w['type']=='outline'){
-        window.roamAlphaAPI.ui.rightSidebar.removeWindow(
-            {"window": 
-                {"type": w['type'], 
-                    "block-uid": w['page-uid']}
-            })
-    } else if (w['type']=='block'){
-        window.roamAlphaAPI.ui.rightSidebar.removeWindow(
-            {"window": 
-                {"type": w['type'], 
-                    "block-uid": w['block-uid']}
-            })
+    window.roamAlphaAPI.ui.rightSidebar.removeWindow(
+        {"window": 
+            {"type": w['type'], 
+              "block-uid": w['block-uid'] || w['page-uid'] || w['mentions-uid']}
         }
+      )
 }
 
 async function loopWindows(){
     let sidebar = window.roamAlphaAPI.ui.rightSidebar.getWindows();
 
     for (let i = 0; i < sidebar.length; i++) {
-        console.log(sidebar[i])
+        // console.log(sidebar[i])
         await removeWindow(sidebar[i])
     }
 }
@@ -51,7 +44,6 @@ function createButton() {
         var flexDiv = document.createElement("div");
         flexDiv.className = "clear-sidebar";
         flexDiv.id = nameToUse + "-flex-space";
-        flexDiv.style = "flex: 1 1 auto;";
         
         roamSidebarButton.insertAdjacentElement("beforeBegin", mainButton);
         roamSidebarButton.insertAdjacentElement("beforeBegin", flexDiv);
@@ -64,7 +56,7 @@ function destroyButton(){
 
     // remove all parts of the button
     const toggles = document.querySelectorAll('.clear-sidebar');
-    console.log(toggles)
+    // console.log(toggles)
     toggles.forEach(tog => {
         tog.remove();
     });
