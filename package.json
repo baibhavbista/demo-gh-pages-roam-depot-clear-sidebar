@@ -1,0 +1,20 @@
+{
+  "name": "roam-depot-clear-sidebar",
+  "version": "1.0.0",
+  "description": "Description for roam-depot-clear-sidebar.",
+  "main": "./build/main.js",
+  "scripts": {
+    "build": "roamjs-scripts build",
+    "prebuild:roam": "npm install",
+    "build:roam": "roamjs-scripts build --depot",
+    "dev:roam": "roamjs-scripts dev --depot",
+    "dev": "roamjs-scripts dev"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "roamjs-scripts": "^0.21.11"
+  },
+  "dependencies": {
+    "roamjs-components": "^0.72.8"
+  }
+}
