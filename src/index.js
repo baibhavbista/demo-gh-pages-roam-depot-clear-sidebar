@@ -22,8 +22,8 @@ async function removeWindow(w){
 }
 
 async function loopWindows(extensionAPI){
+  let sidebar = window.roamAlphaAPI.ui.rightSidebar.getWindows();
   if (extensionAPI.settings.get('sidebar-confirm')) {
-    let sidebar = window.roamAlphaAPI.ui.rightSidebar.getWindows();
     renderSimpleAlert({
       content:
         `Do you want to clear ${sidebar.length} blocks from the sidebar?`,
