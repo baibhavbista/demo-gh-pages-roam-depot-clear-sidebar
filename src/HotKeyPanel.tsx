@@ -37,6 +37,7 @@ const HotKeyEntry = ({
           onKeyDown={(e) => {
             e.stopPropagation();
             e.preventDefault();
+            // TODO correctly order the hotkey
             const parts = hotkey ? hotkey.split("+") : [];
             const formatValue = (
               e.key === "Backspace"
@@ -44,9 +45,10 @@ const HotKeyEntry = ({
                 : ["Shift", "Control", "Alt", "Meta"].includes(e.key)
                   ? Array.from(new Set(parts.concat(e.key.toLowerCase()))).sort(
                     (a, b) => b.length - a.length
-                  )
+                  ).sort() //sort after so that everything is alphabetic and can match e
                   : parts.concat(e.key.toLowerCase())
             ).join("+");
+
             if (formatValue === hotkey) return;
             const error = !formatValue || !!keys[formatValue];
             const newKeys = Object.fromEntries(
