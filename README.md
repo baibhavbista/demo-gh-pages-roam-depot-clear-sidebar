@@ -1,5 +1,5 @@
 # Clear Sidebar
-Adds a button to the top of the right sidebar to clear and close all blocks and pages in the sidebar.
+Adds a button to the top of the right sidebar to clear and close all blocks and pages in the sidebar. A customizable keyboard shortcut can also be set.
 
 
 ## Example 
