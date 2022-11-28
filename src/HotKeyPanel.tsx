@@ -115,7 +115,7 @@ const HotKeyPanel = (extensionAPI: OnloadArgs["extensionAPI"]) => () => {
         onClick={async () => {
 
           const newKeys = Object.fromEntries(
-            Object.entries(keys).concat([["control+o", "xxxxxxx"]])
+            Object.entries(keys).concat([["control+o", "clear-sidebar"]])
           );
           setKeys(newKeys);
           extensionAPI.settings.set("hot-keys", newKeys);
