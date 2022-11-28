@@ -3,7 +3,6 @@ import HotKeyPanel from "./HotKeyPanel";
 
 // define a handler
 let myEventHandler = undefined;
-const appRoot = document.querySelector(".roam-app"); //get the root of the app
 
 async function removeWindow(w) {
   window.roamAlphaAPI.ui.rightSidebar.removeWindow(
@@ -89,7 +88,6 @@ async function onload({ extensionAPI }) {
   if (!extensionAPI.settings.get('sidebar-confirm')) {
     await extensionAPI.settings.set('sidebar-confirm', false);
   }
-  console.log(extensionAPI.settings.get('hot-keys'))
   
   const panelConfig = {
     tabTitle: "Clear Sidebar",
@@ -131,31 +129,30 @@ async function onload({ extensionAPI }) {
         .sort()
         .concat(e.key.toLowerCase())
         .join("+");
-        console.log(extensionAPI.settings.get("hot-keys"), modifiers, mapping)  
-      // if the current modifier list being pressed in the event exists in the hotkeys list get the uid
+
+        // if the current modifier list being pressed in the event exists in the hotkeys list get the uid
       const srcUid = (
         extensionAPI.settings.get("hot-keys")
       )?.[mapping];
-      console.log("srcuid", srcUid)
+
       if (srcUid) { //if there's a match
         e.preventDefault(); //stop the normal shortcut action
         e.stopPropagation(); //stop the event from continuing
         loopWindows(extensionAPI)
-        console.log("correct keyboard shortcuts hit")
+        // console.log("correct keyboard shortcuts hit")
         
       }
     }
   }
-  // add the event listener to the root of the app. Doing this instead of adding to window allows for different events. I think...
-  appRoot?.addEventListener("keydown", myEventHandler);
+  // attaching to the window allows for listens outside of a block
+  window?.addEventListener("keydown", myEventHandler);
   
   createButton(extensionAPI)
   console.log("load clear sidebar plugin")
 }
 
 function onunload() {
-  console.log(myEventHandler)
-  appRoot.removeEventListener("keydown", myEventHandler, false);
+  window.removeEventListener("keydown", myEventHandler, false);
   destroyButton()
   console.log("unload clear sidebar plugin")
 }
