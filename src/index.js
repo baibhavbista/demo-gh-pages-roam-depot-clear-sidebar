@@ -67,9 +67,9 @@ async function loopWindows(extensionAPI) {
   }
 }
 
-const createIconButton = (icon) => {
+const createIconButton = (icon, className) => {
   const popoverButton = document.createElement("button");
-  popoverButton.className = "bp3-button bp3-minimal bp3-small clear-sidebar";
+  popoverButton.className = `bp3-button bp3-minimal bp3-small ${className}`;
   popoverButton.tabIndex = 0;
   popoverButton.style = "right: 85px;";
   const popoverIcon = document.createElement("span");
@@ -88,7 +88,7 @@ function createButton(extensionAPI) {
 
   var checkForButton = document.getElementById(`${nameToUse}-flex-space`);
   if (!checkForButton) {
-    var mainButton = createIconButton(iconName);
+    var mainButton = createIconButton(iconName, 'clear-sidebar');
     var roamSidebarButton = document.body.querySelector("#right-sidebar>.flex-h-box>button");
 
     var flexDiv = document.createElement("div");
@@ -110,7 +110,7 @@ function createCollapseButton(){
 
   var checkForButton = document.getElementById(`${nameToUse}-flex-space`);
   if (!checkForButton) {
-    var mainButton = createIconButton(iconName);
+    var mainButton = createIconButton(iconName, 'collapse-all');
     var roamSidebarButton = document.body.querySelector("#right-sidebar>.flex-h-box>button");
 
     var flexDiv = document.createElement("div");
