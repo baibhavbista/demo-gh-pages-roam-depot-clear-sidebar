@@ -1,8 +1,4 @@
 import { render as renderSimpleAlert } from "roamjs-components/components/SimpleAlert";
-import HotKeyPanel from "./HotKeyPanel";
-
-// define a handler
-let myEventHandler = undefined;
 
 async function removeWindow(w) {
   window.roamAlphaAPI.ui.rightSidebar.removeWindow(
@@ -171,59 +167,25 @@ async function onload({ extensionAPI }) {
           }
           }
         }
-      },
-      {
-        id: "hot-keys",
-        name: "Hot Keys",
-        description:
-          "Set a custom hot key to clear the sidebar",
-        action: {
-          type: "reactComponent",
-          component: HotKeyPanel(extensionAPI),
-        },
-      },
+      }
     ]
   };
 
   extensionAPI.settings.panel.create(panelConfig);
   
-  
-  myEventHandler = async (e) => {
-    //figure out what keys are being pressed and save them
-    const modifiers = new Set();
-    if (e.altKey) modifiers.add("alt");
-    if (e.shiftKey) modifiers.add("shift");
-    if (e.ctrlKey) modifiers.add("control");
-    if (e.metaKey) modifiers.add("meta");
-    if (modifiers.size) {
-      const mapping = Array.from(modifiers)
-        .sort()
-        .concat(e.key.toLowerCase())
-        .join("+");
+  extensionAPI.ui.commandPalette.addCommand({
+    label: 'Clear Sidebar', 
+    callback: () => {
+      loopWindows(extensionAPI);
+    },
+    "disable-hotkey": false,
+  })
 
-        // if the current modifier list being pressed in the event exists in the hotkeys list get the uid
-      const srcUid = (
-        extensionAPI.settings.get("hot-keys")
-      )?.[mapping];
-
-      if (srcUid) { //if there's a match
-        e.preventDefault(); //stop the normal shortcut action
-        e.stopPropagation(); //stop the event from continuing
-        loopWindows(extensionAPI)
-        // console.log("correct keyboard shortcuts hit")
-        
-      }
-    }
-  }
-  // attaching to the window allows for listens outside of a block
-  window?.addEventListener("keydown", myEventHandler);
-  
   createButton(extensionAPI)
   console.log("load clear sidebar plugin")
 }
 
 function onunload() {
-  window.removeEventListener("keydown", myEventHandler, false);
   destroyButton('.clear-sidebar')
   destroyButton('.collapse-all')
   console.log("unload clear sidebar plugin");
