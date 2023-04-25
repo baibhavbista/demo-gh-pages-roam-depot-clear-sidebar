@@ -31,7 +31,7 @@ jobs:
       - name: Build the roam extension
         run: chmod +x build.sh && ./build.sh
       - name: move the extension files to deploy/ directory
-        run: mkdir deploy ; cp extension.js deploy/ ; cp extension.css deploy/ ; cp README.md deploy/ ; cp CHANGELOG.md deploy/ ; echo "OK"
+        run: mkdir deploy ; cp extension.js deploy/ ; cp extension.css deploy/ | true ; cp README.md deploy/ ; cp CHANGELOG.md deploy/ | true ; echo "OK"
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
